@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<title>动态效果</title>
+	<script src="animate.js"></script>
+	<link rel="stylesheet" href="css.css" />
+	</head>
+	<body> 
+	<div class="text" id="text"> 
+	     <img src="images/a15.png" id="laba">
+        <div class="word1" id="word1">
+	        <div class="word" id="word">[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！
+	        </div>
+	    </div>
+	</div>
+	    <div  class="bigbox" id="bigbox">
+	    <div class="box" id="box">
+	        <div class="slider" id="slider">
+	       	    <div class="slide"><img src="images/b5.png"></div>
+	       	    <div class="slide"><img src="images/b1.png"></div>
+	       	    <div class="slide"><img src="images/b2.png"></div>
+	       	    <div class="slide"><img src="images/b3.png"></div>
+	       	    <div class="slide"><img src="images/b4.png"></div>
+	    	    <div class="slide"><img src="images/b5.png"></div>
+	       	    <div class="slide"><img src="images/b1.png"></div>
+	       </div>
+	        <span id="left"></span>
+	        <span id="right"></span>
+	        <ul class="nav" id="nav">
+	           <li class="active">1</li>
+	           <li>2</li>
+	           <li>3</li>
+	           <li>4</li>
+	           <li>5</li>
+	        </ul>   	
+	    </div>
+	  </div>
+		<script type="text/javascript">
+		   var oNavlist=document.getElementById("nav").children;
+		   var left=document.getElementById('left');
+		   var right=document.getElementById('right');
+		   var index=1;
+		   var isMoving =false;
+           var slider=document.getElementById('slider');
+           var box=document.getElementById("box");
+           
+           function next(){
+            	index++;
+            	navChange();          	
+           	    animate(slider,{left:-1200*index},function(){      
+           	    	if(index===6){        		     	
+           			    slider.style.left="-1200px"; 
+           			    index=1;    
+           		    } 
+           	    });
+            }
+           
+           function prev(){
+            	index--;
+            	navChange(); 
+           	    animate(slider,{left:-1200*index},function(){
+           		     if(index===0){
+           			    slider.style.left="-6000px";  
+           			    index=5;  		   
+           		       } 
+           	    });
+            }
+
+           var timer=setInterval(next,3000);
+           box.onmouseover=function(){
+           	    animate(left,{opacity:50})
+           	    animate(right,{opacity:50})
+           	    clearInterval(timer);
+           }
+
+           box.onmouseout=function(){
+             	animate(left,{opacity:0})
+           	    animate(right,{opacity:0})
+                timer=setInterval(next,3000);
+           }
+
+           right.onclick=next;
+           left.onclick=prev;
+
+           for (var i=0;i<oNavlist.length;i++){
+           	         
+           	          oNavlist[i].idx=i;
+           	          oNavlist[i].onclick=function(){
+                      index=this.idx+1;
+                      navChange();
+           	       	  animate(slider,{left:-1200*index});
+            	}
+           }
+
+           function navChange(){
+           	     for(var i=0;i<oNavlist.length;i++){
+           		      oNavlist[i].className='';
+           	        }
+           	     if(index===6){
+                      oNavlist[0].className='active';
+                	}
+                else if(index===0){
+            	      oNavlist[4].className='active';
+                    }
+                 else
+                  oNavlist[index-1].className="active";
+           	}
+           var  still;
+           var word=document.getElementById("word");
+           still=parseInt(getStyle(word,"left"));
+           xxx=setInterval(function(){
+           	    now=parseInt(getStyle(word,"left")); 
+           	         now=now-1;
+           	         word.style.left=now+"px";
+           	    if(now===-500){
+           	     	now=still;
+           	     	word.style.left=now+"px";
+           	     }
+           },20)
+         
+          
+		</script>
+	</body>
+
+</html>
